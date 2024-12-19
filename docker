@@ -1,0 +1,11 @@
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl enable docker
+sudo systemctl start docker
+docker --version
+
+sudo docker build -t my-html-image .
+sudo docker run --name my-html-container -d -p 8080:80 my-html-image
+sudo docker ps
+http://<your-server-ip>:8080
+
