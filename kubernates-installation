@@ -1,0 +1,36 @@
+# Step 1: Update system
+sudo apt update
+
+# Step 2: Install Docker
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Step 3: Install Kubernetes components
+sudo apt install apt-transport-https ca-certificates curl -y
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+sudo apt install kubeadm kubelet kubectl -y
+sudo apt-mark hold kubeadm kubelet kubectl
+
+# Step 4: Disable swap (required for Kubernetes)
+sudo swapoff -a
+# And edit /etc/fstab to disable swap permanently
+
+# Step 5: Initialize Kubernetes master node
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+# Step 6: Set up kubectl for user
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Step 7: Install network plugin (e.g., Flannel)
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+# Step 8: Join worker nodes (on worker node)
+sudo kubeadm join <master-ip>:<port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+
+# Step 9: Verify cluster status
+kubectl get nodes
