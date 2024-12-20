@@ -1,11 +1,25 @@
+# Update package list
 sudo apt update
+
+# Install Docker
 sudo apt install docker.io -y
+
+# Enable Docker to start on boot
 sudo systemctl enable docker
+
+# Start Docker service
 sudo systemctl start docker
+
+# Check Docker version
 docker --version
 
+# Build the Docker image from the current directory
 sudo docker build -t my-html-image .
-sudo docker run --name my-html-container -d -p 8080:80 my-html-image
-sudo docker ps
-http://<your-server-ip>:8080
 
+# Run the Docker container with port mapping (8080 on the host to 80 on the container)
+sudo docker run --name my-html-container -d -p 8080:80 my-html-image
+
+# Check the running containers
+sudo docker ps
+
+# Access the HTML app in a browser: http://<your-server-ip>:8080
