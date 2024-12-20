@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        h1{
+            color: white;
+            text-align: center;
+        }
+
+        input{
+            width: 50%;
+            height: 2em;
+
+        }
+        button{
+            background-color: green;
+            color: white;
+            border-radius: 1.5em;
+            height: 3em;
+            width: 10%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registration Page</h1>
+    <label for="uname">Enter Your Name:</label>
+    <input type="text" name="uname" id="uname">
+    <label for="password">Enter your Password</label>
+    <input type="password" name="password" id="password">
+    <label for="email">Enter your Email</label>
+    <input type="email" name="email" id="email">
+    <button type="submit" id="submit">Submit</button>
+
+    <script>
+        let uname = document.getElementById("uname");
+        let password = document.getElementById("password");
+        let email = document.getElementById("email");
+        let submit = document.getElementById("submit");
+
+
+        submit.addEventListener("click", (e) => {
+            e.preventDefault();
+        if(password.value.length < 8){
+            alert("password should be length of 8");
+            
+        }else if(uname.value === ""){
+            alert("Please enter your name");
+            
+        }else if(email.value === ""){
+            alert("Please enter your email");   
+            
+        }else{
+
+            alert("submittted");
+            
+        }
+        })
+    </script>
+</body>
+</html>
