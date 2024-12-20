@@ -21,6 +21,9 @@ sudo swapoff -a
 # Step 5: Initialize Kubernetes master node
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
+# Example output: 
+# kubeadm join 192.168.1.100:6443 --token abcdef.0123456789abcdef --discovery-token-ca-cert-hash sha256:abcd1234efgh5678ijklmnopqrstuvwx
+
 # Step 6: Set up kubectl for user
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -30,7 +33,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 # Step 8: Join worker nodes (on worker node)
-sudo kubeadm join <master-ip>:<port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+sudo kubeadm join 192.168.1.100:6443 --token abcdef.0123456789abcdef --discovery-token-ca-cert-hash sha256:abcd1234efgh5678ijklmnopqrstuvwx
 
 # Step 9: Verify cluster status
 kubectl get nodes
